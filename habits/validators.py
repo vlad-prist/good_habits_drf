@@ -50,15 +50,3 @@ class DurationSecondsValidator:
         tmp_val = dict(value).get(self.field) # пытаемся получить значение того поля, которое нудно отвалидировать
         if tmp_val is not None and tmp_val > timedelta(seconds=120):
             raise ValidationError("Время выполнения должно быть не больше 120 секунд.")
-
-
-class DurationDaysValidator:
-    """-"""
-    def __init__(self, field):
-        self.field = field
-
-    def __call__(self, value):
-        tmp_val = dict(value).get(self.field)
-
-        if 7 < tmp_val or tmp_val < 1:
-            raise ValidationError("Нельзя выполнять привычку реже, чем 1 раз в 7 дней.")
