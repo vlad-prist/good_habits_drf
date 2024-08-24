@@ -1,3 +1,5 @@
+from django.utils.decorators import method_decorator
+from drf_yasg.utils import swagger_auto_schema
 from rest_framework import generics, permissions
 
 from habits.models import Habit
@@ -18,10 +20,25 @@ class HabitCreateAPIView(generics.CreateAPIView):
 
 
 class HabitListAPIView(generics.ListAPIView):
-    queryset = Habit.objects.all()
+    ''' Список всех привычек авторизованного пользователя '''
+    queryset = Habit.objects.filter()
     serializer_class = HabitSerializer
     pagination_class = HabitPaginator
     permission_classes = (permissions.IsAuthenticated,)
+
+    def get_queryset(self):
+        queryset = self.queryset.filter(user_habit=self.request.user)
+        return queryset
+
+
+@method_decorator(name='list', decorator=swagger_auto_schema(
+    operation_description="Список публичных привычек"
+))
+class HabitPublicListAPIView(generics.ListAPIView):
+    ''' Список публичных привычек '''
+    queryset = Habit.objects.filter(is_public=True)
+    serializer_class = HabitSerializer
+    pagination_class = HabitPaginator
 
 
 class HabitRetrieveAPIView(generics.RetrieveAPIView):
