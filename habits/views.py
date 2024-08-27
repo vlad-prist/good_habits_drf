@@ -6,7 +6,6 @@ from habits.models import Habit
 from habits.paginators import HabitPaginator
 from habits.serializers import HabitSerializer
 from users.permissions import IsOwner
-from habits.tasks import add
 
 
 class HabitViewSet(viewsets.ModelViewSet):
@@ -19,14 +18,14 @@ class HabitViewSet(viewsets.ModelViewSet):
         habit = serializer.save()
         habit.user_habit = self.request.user
         habit.save()
-        add.delay()
 
 
 @method_decorator(
-    name='list', decorator=swagger_auto_schema(operation_description="Список личных привычек")
+    name='list',
+    decorator=swagger_auto_schema(operation_description="Список личных привычек")
 )
 class HabitOwnListAPIView(generics.ListAPIView):
-    ''' Список личных привычек авторизованного пользователя '''
+    """ Список личных привычек авторизованного пользователя. """
     queryset = Habit.objects.all()
     serializer_class = HabitSerializer
     pagination_class = HabitPaginator
@@ -37,10 +36,11 @@ class HabitOwnListAPIView(generics.ListAPIView):
 
 
 @method_decorator(
-    name='list', decorator=swagger_auto_schema(operation_description="Список публичных привычек")
+    name='list',
+    decorator=swagger_auto_schema(operation_description="Список публичных привычек")
 )
 class HabitPublicListAPIView(generics.ListAPIView):
-    ''' Список публичных привычек '''
+    """ Список публичных привычек. """
     queryset = Habit.objects.filter(is_public=True)
     serializer_class = HabitSerializer
     pagination_class = HabitPaginator
