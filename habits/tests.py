@@ -76,7 +76,7 @@ class HabitTest(APITestCase):
             "is_public": "False",
         }
         response = self.client.put(url, data=data)
-        print(response.json())
+        # print(response.json())
         self.assertEqual(
             response.status_code, status.HTTP_200_OK
         )
@@ -88,3 +88,37 @@ class HabitTest(APITestCase):
         self.assertEqual(
             response.status_code, status.HTTP_204_NO_CONTENT
         )
+
+    def test_habit_filter_by_user(self):
+        """ Фильтрация привычек по создателю. """
+        url = reverse("habits:habits_list")
+        response = self.client.get(url)
+        # print(response.json())
+        self.assertEqual(
+            response.status_code, status.HTTP_200_OK
+        )
+        self.assertEqual(len(response.json()['results']), 1)
+
+# class HabitValidateTest(APITestCase):
+#     """ Тестирование модели Habit. """
+#
+#     def setUp(self):
+#         """ Инициализация теста. """
+#         self.user_two = User.objects.create(email='test2@test.com')
+#         self.client.force_authenticate(user=self.user_two)
+#
+#     def test_duration_habit(self):
+#         """ Проверка валидации длительности. Создаем привычку длиной больше 120 секунд. """
+#         data = {
+#             "user_habit": self.user_two.pk,
+#             "place_habit": "home test 2",
+#             "time_habit": "10:00",
+#             "action_habit": "do test 2",
+#             "period": "daily",
+#             "is_public": "False",
+#             "duration": "01:03",
+#         }
+#         response = self.client.post('/habit/create/', data=data)
+#         self.assertEqual(
+#             response.status_code, status.HTTP_400_BAD_REQUEST
+#         )
