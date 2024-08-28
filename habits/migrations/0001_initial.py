@@ -15,18 +15,69 @@ class Migration(migrations.Migration):
 
     operations = [
         migrations.CreateModel(
-            name='Habit',
+            name="Habit",
             fields=[
-                ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('place_habit', models.CharField(max_length=200, verbose_name='место, в котором необходимо выполнять привычку')),
-                ('time_habit', models.TimeField(verbose_name='время, когда необходимо выполнять привычку')),
-                ('action_habit', models.CharField(max_length=350, verbose_name='действие, которое представляет собой привычка')),
-                ('period', models.CharField(choices=[('daily', 'ежедневно'), ('monday', 'понедельник'), ('tuesday', 'вторник'), ('wednesday', 'среда'), ('thursday', 'четверг'), ('friday', 'пятница'), ('saturday', 'суббота'), ('sunday', 'воскресенье')], default='Ежедневно', max_length=20, verbose_name='периодичность выполнения привычки')),
-                ('user_habit', models.ForeignKey(blank=True, null=True, on_delete=django.db.models.deletion.SET_NULL, to=settings.AUTH_USER_MODEL, verbose_name='создатель привычки')),
+                (
+                    "id",
+                    models.BigAutoField(
+                        auto_created=True,
+                        primary_key=True,
+                        serialize=False,
+                        verbose_name="ID",
+                    ),
+                ),
+                (
+                    "place_habit",
+                    models.CharField(
+                        max_length=200,
+                        verbose_name="место, в котором необходимо выполнять привычку",
+                    ),
+                ),
+                (
+                    "time_habit",
+                    models.TimeField(
+                        verbose_name="время, когда необходимо выполнять привычку"
+                    ),
+                ),
+                (
+                    "action_habit",
+                    models.CharField(
+                        max_length=350,
+                        verbose_name="действие, которое представляет собой привычка",
+                    ),
+                ),
+                (
+                    "period",
+                    models.CharField(
+                        choices=[
+                            ("daily", "ежедневно"),
+                            ("monday", "понедельник"),
+                            ("tuesday", "вторник"),
+                            ("wednesday", "среда"),
+                            ("thursday", "четверг"),
+                            ("friday", "пятница"),
+                            ("saturday", "суббота"),
+                            ("sunday", "воскресенье"),
+                        ],
+                        default="Ежедневно",
+                        max_length=20,
+                        verbose_name="периодичность выполнения привычки",
+                    ),
+                ),
+                (
+                    "user_habit",
+                    models.ForeignKey(
+                        blank=True,
+                        null=True,
+                        on_delete=django.db.models.deletion.SET_NULL,
+                        to=settings.AUTH_USER_MODEL,
+                        verbose_name="создатель привычки",
+                    ),
+                ),
             ],
             options={
-                'verbose_name': 'Привычка',
-                'verbose_name_plural': 'Привычки',
+                "verbose_name": "Привычка",
+                "verbose_name_plural": "Привычки",
             },
         ),
     ]
