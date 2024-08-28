@@ -6,26 +6,6 @@ NULLABLE = {"blank": True, "null": True}
 
 
 class Habit(models.Model):
-    PERIOD_DAILY = "Ежедневно"
-    PERIOD_MONDAY = "По понедельникам"
-    PERIOD_TUESDAY = "По вторника"
-    PERIOD_WEDNESDAY = "По средам"
-    PERIOD_THURSDAY = "По четвергам"
-    PERIOD_FRIDAY = "По пятницам"
-    PERIOD_SATURDAY = "По субботам"
-    PERIOD_SUNDAY = "По воскресеньям"
-
-    PERIOD_CHOICES = (
-        ("daily", "ежедневно"),
-        ("monday", "понедельник"),
-        ("tuesday", "вторник"),
-        ("wednesday", "среда"),
-        ("thursday", "четверг"),
-        ("friday", "пятница"),
-        ("saturday", "суббота"),
-        ("sunday", "воскресенье"),
-    )
-
     user_habit = models.ForeignKey(
         settings.AUTH_USER_MODEL,
         on_delete=models.SET_NULL,
@@ -44,12 +24,6 @@ class Habit(models.Model):
     action_habit = models.CharField(
         max_length=350, verbose_name="действие, которое представляет собой привычка"
     )
-    period = models.CharField(
-        max_length=20,
-        choices=PERIOD_CHOICES,
-        default=PERIOD_DAILY,
-        verbose_name="периодичность выполнения привычки",
-    )
     is_pleasant = models.BooleanField(
         default=False, verbose_name="признак приятной привычки"
     )
@@ -57,9 +31,9 @@ class Habit(models.Model):
         "self", on_delete=models.SET_NULL, verbose_name="Связанная привычка", **NULLABLE
     )
     reward = models.CharField(max_length=300, verbose_name="вознаграждение", **NULLABLE)
-    duration = models.DurationField(verbose_name="длительность привычки", **NULLABLE)
+    duration = models.DurationField(verbose_name="Время на выполнение", **NULLABLE)
     is_public = models.BooleanField(default=False, verbose_name="признак публичности")
-    frequency = models.SmallIntegerField(
+    frequency = models.PositiveSmallIntegerField(
         default=1,
         verbose_name="Периодичность выполнения привычки (дней)",
         help_text="Привычку выполнять каждые * дней",
