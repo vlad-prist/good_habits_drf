@@ -18,7 +18,6 @@ class HabitTest(APITestCase):
             place_habit="home test",
             time_habit="09:00",
             action_habit="do test",
-            period="daily",
             is_public="True",
         )
 
@@ -39,7 +38,6 @@ class HabitTest(APITestCase):
             "place_habit": "home test 2",
             "time_habit": "10:00",
             "action_habit": "do test 2",
-            "period": "daily",
             "is_public": "False",
         }
         response = self.client.post(url, data=data)
@@ -64,7 +62,6 @@ class HabitTest(APITestCase):
             "place_habit": "home test 2 updated",
             "time_habit": "11:00",
             "action_habit": "do test 2 updated",
-            "period": "monday",
             "is_public": "False",
         }
         response = self.client.put(url, data=data)
@@ -84,3 +81,27 @@ class HabitTest(APITestCase):
         # print(response.json())
         self.assertEqual(response.status_code, status.HTTP_200_OK)
         self.assertEqual(len(response.json()["results"]), 1)
+
+
+class HabitValidateTest(APITestCase):
+    """ Тестирование модели Habit. """
+
+    def setUp(self):
+        """ Инициализация теста. """
+        self.user_two = User.objects.create(email='test2@test.com')
+        self.client.force_authenticate(user=self.user_two)
+
+    def test_duration_habit(self):
+        """ Проверка валидации длительности. Создаем привычку длиной больше 120 секунд. """
+        data = {
+            "user_habit": self.user_two.pk,
+            "place_habit": "home test 2",
+            "time_habit": "10:00",
+            "action_habit": "do test 2",
+            "is_public": "False",
+            "duration": "00:03:00",
+        }
+        response = self.client.post('/habit/create/', data=data)
+        self.assertEqual(
+            response.status_code, status.HTTP_400_BAD_REQUEST
+        )
