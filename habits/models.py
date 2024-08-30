@@ -5,7 +5,16 @@ from config import settings
 NULLABLE = {"blank": True, "null": True}
 
 
-class Habit(models.Model):
+class BaseModel(models.Model):
+    objects = models.Manager()
+    created_at = models.DateTimeField(auto_now_add=True, verbose_name="время создания")
+    updated_at = models.DateTimeField(auto_now=True, verbose_name="время последнего изменения")
+
+    class Meta:
+        abstract = True
+
+
+class Habit(BaseModel):
     user_habit = models.ForeignKey(
         settings.AUTH_USER_MODEL,
         on_delete=models.SET_NULL,
