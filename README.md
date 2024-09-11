@@ -104,7 +104,17 @@ good_habits_drf_bot
 - [x] Настроена отложенная задача через Celery
 - [x] Имеется список зависимостей.
 - [x] Результат проверки Flake8 равен 100%, при исключении миграций.
+- [x] Для быстрого масштабирования проекта применяется контейнеризация. Проект завернут в Docker.
 
+
+## Настройка и запуск Docker
+
+Для работы с Docker на компьютере должен быть установлен Docker и docker-compose 
+
+Для запуска докера на локальном хосте необходимо выполнить команду:
+```sh
+docker-compose up -d --build
+```
 
 
 ## Источники
@@ -117,3 +127,5 @@ good_habits_drf_bot
 6. Интерактивная документация API. Официальная документация - [drf-yasg](https://drf-yasg.readthedocs.io/en/stable/readme.html)
 7. Celery. Официальная документация - [Celery](https://docs.celeryq.dev/en/stable/django/first-steps-with-django.html)
 8. Celery-beat. Официальная документация - [Celery Beat](https://docs.celeryq.dev/en/stable/userguide/periodic-tasks.html)
+9. Docker - Инструкции по установке [Docker Desktop on Windows](https://docs.docker.com/desktop/install/windows-install/)
+10. Docker - Дополнительный справочный ресурс [Docker Hub](https://hub.docker.com/)
