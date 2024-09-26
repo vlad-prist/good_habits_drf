@@ -33,7 +33,7 @@ services:
     volumes:
       - .:/app
     env_file:
-      - .env
+      - .env.docker
 
   celery:
     build: .
@@ -47,7 +47,7 @@ services:
       - db
       - app
     env_file:
-      - .env
+      - .env.docker
 
   celery_beat:
     build: .
@@ -61,7 +61,7 @@ services:
       - db
       - app
     env_file:
-      - .env
+      - .env.docker
 
 volumes:
   pg_data:
